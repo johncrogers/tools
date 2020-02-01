@@ -1,5 +1,7 @@
 # TERMINAL CONFIG:
 alias bashprofile="cd ~ && vim ./.bash_profile && . ~/.bash_profile"
+alias bpopen="cd ~ && open -a 'Visual Studio Code' .bash_profile"
+alias bprefresh="cd ~ && . ~/.bash_profile"
 # - nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
