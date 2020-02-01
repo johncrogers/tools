@@ -1,4 +1,4 @@
-const { readdirSync } = require("fs");
+const { readdirSync, existsSync, mkdirSync } = require("fs");
 const readline = require("readline");
 const workspaces = require("./_workspaces.js");
 
@@ -32,6 +32,20 @@ try {
     workspaces.open();
   }
 } catch (error) {
+  if (!existsSync(`${__dirname}/${outputFolder}`)) {
+    console.log(
+      "There is no output folder. It appears that this is your first run of wb. Creating an output folder..."
+    );
+    mkdirSync(`${__dirname}/${outputFolder}`);
+    if (existsSync(`${__dirname}/${outputFolder}`)) {
+      console.log("Success!");
+    } else {
+      console.log(
+        "It looks like there is a problem with your wb installation."
+      );
+      process.exit(1);
+    }
+  }
   if (
     error instanceof TypeError &&
     readdirSync(`${__dirname}/${outputFolder}`).includes(
