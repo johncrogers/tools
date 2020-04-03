@@ -3,7 +3,7 @@ const outputFolder = "output";
 module.exports.helpNotes = {
   create: {
     description: "Creates a new workspace file.",
-    example: "wb create rigup /Users/johnrogers/code/rigup/",
+    example: "wb create rigup /Users/johnrogers/work/code/rigup/",
     arguments: {
       name: "Name used to reference the workspace in the future.",
       path: "Path to target directory"
@@ -89,7 +89,10 @@ module.exports.open = workspace => {
   const child_process = require("child_process");
   let fileName = process.argv[3] || workspace;
   console.log(__dirname);
-  let path = `open ${__dirname}/${outputFolder}/${fileName}.code-workspace`;
+  const workspaceName = fileName.includes(".code-workspace")
+    ? fileName
+    : `${fileName}.code-workspace`;
+  let path = `open ${__dirname}/${outputFolder}/${workspaceName}`;
   console.log(`Opening workspace: ${fileName}`);
   console.log(`  -> path: ${path}`);
   child_process.exec(path);

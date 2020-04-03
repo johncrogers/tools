@@ -1,0 +1,11 @@
+Types:
+    ☐ commonResourceNames: resource | ResourceActionTypes | actionGenerator | ACTION_TAG | ActionTag
+    ☐ reduxFiles: 'action | reducer | etc'
+`GenerateFiles`( names: { key in commonResourceNames: string } ):
+    ☐ create reduxResources: {key in reduxFiles: (names)=> fileContent: string[]}
+    `generateFileContent`(  ):
+        ☐ for key in reduxFiles
+☐ 
+☐ 
+☐ for key in reduxFiles
+☐ create each file {name:string, content:string[]}

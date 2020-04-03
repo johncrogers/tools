@@ -1,0 +1,17 @@
+☐ ShippingAddressCardAsOrderingResident: React.FC<> = () => <FetchShippingAddressCard {...{ mapStateToProps: ( state: IRootStateType ) => ResidentWarehouseShippingAddress }} />
+    ☐ FetchShippingAddressCard: Rect.FC<{ address?: ShippingAddressType; mapStateToProps?: ( state: IRootStateType ) => ShippingAddressType; }> = ({address? mapStateToProps?}) => address ? <ShippingAddress {...{address}} /> || mapStateToProps ? FetchConnect({ state: { mapStateToProps }, ConnectedComponent: ShippingAddress})
+
+        props: address?
+        ☐ useEffect
+            ☐ switch ``:
+            ☐ if (currentUser)
+                ☐ Set address
+            ☐ else
+                ☐ Dispatch action to get it
+        render ShippingAddress:
+            ☐ render Card
+                ☐ Address section:
+                    ☐ if (address)
+                        ☐ render address data
+                    ☐ else
+                        ☐ render loading component

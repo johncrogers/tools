@@ -1,0 +1,302 @@
+{
+  "/": [
+    {
+      "name": "Dashboard",
+      "path": "/",
+      "permissions": { "adminUser": true, "warehouseUser": true }
+    }
+  ],
+  "/buildings": [
+    {
+      "name": "Pages",
+      "path": "/buildings",
+      "views": [
+        {
+          "component": "LoginContainer",
+          "layout": "/auth",
+          "name": "Login",
+          "path": "/login"
+        },
+        {
+          "component": "Register",
+          "layout": "/auth",
+          "name": "Register",
+          "path": "/register"
+        },
+        {
+          "component": "LockScreen",
+          "layout": "/auth",
+          "name": "LockScreen",
+          "path": "/lock-screen"
+        },
+        {
+          "component": "UserProfileContainer",
+          "layout": "/admin",
+          "name": "UserProfile",
+          "path": "/user-profile"
+        },
+        {
+          "component": "MyWarehouseSettingsContainer",
+          "layout": "/admin",
+          "name": "MyWarehouseSettings",
+          "path": "/my-warehouse"
+        }
+      ]
+    }
+  ],
+  "/building/:buildingId(\\d+)?": [
+    {
+      "component": "BuildingFormContainer",
+      "layout": "/admin",
+      "name": "Add Building",
+      "path": "/building/:buildingId(\\d+)?",
+      "permissions": { "adminUser": true, "warehouseUser": true }
+    }
+  ],
+  "/warehouses": [
+    {
+      "component": "WarehousesTableContainer",
+      "layout": "/admin",
+      "name": "Warehouses",
+      "path": "/warehouses",
+      "permissions": { "adminUser": true, "warehouseUser": true }
+    }
+  ],
+  "/warehouse/:warehouseId(\\d+)?": [
+    {
+      "component": "WarehouseFormContainer",
+      "layout": "/admin",
+      "name": "Edit Warehouse",
+      "path": "/warehouse/:warehouseId(\\d+)?",
+      "permissions": { "adminUser": true, "warehouseUser": true }
+    }
+  ],
+  "/packages": [
+    {
+      "component": "PackagesTableContainer",
+      "layout": "/admin",
+      "name": "Packages",
+      "path": "/packages",
+      "permissions": { "adminUser": true, "warehouseUser": true }
+    }
+  ],
+  "/package/:fetchPackageId(\\d+)?": [
+    {
+      "component": "PackageFormContainer",
+      "layout": "/admin",
+      "name": "Add Package",
+      "path": "/package/:fetchPackageId(\\d+)?",
+      "permissions": { "adminUser": true, "warehouseUser": true }
+    }
+  ],
+  "/users": [
+    {
+      "component": "UsersTableContainer",
+      "layout": "/admin",
+      "name": "Users",
+      "path": "/users",
+      "permissions": { "adminUser": true, "warehouseUser": true }
+    }
+  ],
+  "/user/:userId(.+)?": [
+    {
+      "component": "UserFormContainer",
+      "layout": "/admin",
+      "name": "Add User",
+      "path": "/user/:userId(.+)?",
+      "permissions": { "adminUser": true, "warehouseUser": true }
+    }
+  ],
+  "/warehouse/locations": [
+    {
+      "name": "Locations",
+      "path": "/warehouse/locations",
+      "permissions": { "adminUser": true, "warehouseUser": true },
+      "views": [
+        {
+          "name": "Manage Locations",
+          "path": "/warehouse/batchLocations/",
+          "permissions": { "adminUser": true, "warehouseUser": true }
+        }
+      ]
+    }
+  ],
+  "/warehouse/location/:warehouseLocationId(\\d+)?": [
+    {
+      "component": "WarehouseLocationFormContainer",
+      "layout": "/admin",
+      "name": "Warehouse Location",
+      "path": "/warehouse/location/:warehouseLocationId(\\d+)?",
+      "permissions": { "adminUser": true, "warehouseUser": true }
+    }
+  ],
+  "/warehouse/batchLocations/": [
+    {
+      "name": "Manage Locations",
+      "path": "/warehouse/batchLocations/",
+      "permissions": { "adminUser": true, "warehouseUser": true }
+    }
+  ],
+  "/batches": [
+    {
+      "name": "Batches",
+      "path": "/batches",
+      "permissions": { "adminUser": true, "warehouseUser": true },
+      "views": [
+        {
+          "name": "Add Batch",
+          "path": "/batch/",
+          "permissions": { "adminUser": true, "warehouseUser": true }
+        },
+        {
+          "name": "Today Detail",
+          "path": "/todayDetail/",
+          "permissions": { "warehouseUser": true }
+        }
+      ]
+    }
+  ],
+  "/batch/:batchId(\\d+)?": [
+    {
+      "component": "BatchFormContainer",
+      "layout": "/admin",
+      "name": "Add Batch",
+      "path": "/batch/:batchId(\\d+)?",
+      "permissions": { "adminUser": true, "warehouseUser": true }
+    }
+  ],
+  "/todayDetail": [
+    {
+      "component": "WarehouseDailyWindowsDetailContainer",
+      "layout": "/admin",
+      "name": "Today Detail",
+      "path": "/todayDetail",
+      "permissions": { "warehouseUser": true }
+    }
+  ],
+  "/login": [
+    {
+      "component": "LoginContainer",
+      "layout": "/auth",
+      "name": "Login",
+      "path": "/login"
+    }
+  ],
+  "/register": [
+    {
+      "component": "Register",
+      "layout": "/auth",
+      "name": "Register",
+      "path": "/register"
+    }
+  ],
+  "/lock-screen": [
+    {
+      "component": "LockScreen",
+      "layout": "/auth",
+      "name": "LockScreen",
+      "path": "/lock-screen"
+    }
+  ],
+  "/user-profile": [
+    {
+      "component": "UserProfileContainer",
+      "layout": "/admin",
+      "name": "UserProfile",
+      "path": "/user-profile"
+    }
+  ],
+  "/my-warehouse": [
+    {
+      "component": "MyWarehouseSettingsContainer",
+      "layout": "/admin",
+      "name": "MyWarehouseSettings",
+      "path": "/my-warehouse"
+    }
+  ],
+  "/packages/": [
+    {
+      "name": "Packages",
+      "path": "/packages/",
+      "permissions": { "adminUser": true, "warehouseUser": true },
+      "views": [
+        {
+          "name": "Add Package",
+          "path": "/package/",
+          "permissions": { "adminUser": true, "warehouseUser": true }
+        }
+      ]
+    }
+  ],
+  "/package/": [
+    {
+      "name": "Add Package",
+      "path": "/package/",
+      "permissions": { "adminUser": true, "warehouseUser": true }
+    }
+  ],
+  "/users/": [
+    {
+      "name": "Users",
+      "path": "/users/",
+      "permissions": { "adminUser": true, "warehouseUser": true },
+      "views": [
+        {
+          "name": "Add User",
+          "path": "/user/",
+          "permissions": { "adminUser": true, "warehouseUser": true }
+        }
+      ]
+    }
+  ],
+  "/user/": [
+    {
+      "name": "Add User",
+      "path": "/user/",
+      "permissions": { "adminUser": true, "warehouseUser": true }
+    }
+  ],
+  "/buildings/": [
+    {
+      "name": "Buildings",
+      "path": "/buildings/",
+      "permissions": { "adminUser": true, "warehouseUser": true },
+      "views": [
+        {
+          "name": "Add Building",
+          "path": "/building/",
+          "permissions": { "adminUser": true, "warehouseUser": true }
+        }
+      ]
+    }
+  ],
+  "/building/": [
+    {
+      "name": "Add Building",
+      "path": "/building/",
+      "permissions": { "adminUser": true, "warehouseUser": true }
+    }
+  ],
+  "/warehouses/": [
+    {
+      "name": "Warehouses",
+      "path": "/warehouses/",
+      "permissions": { "adminUser": true, "warehouseUser": true },
+      "views": []
+    }
+  ],
+  "/batch/": [
+    {
+      "name": "Add Batch",
+      "path": "/batch/",
+      "permissions": { "adminUser": true, "warehouseUser": true }
+    }
+  ],
+  "/todayDetail/": [
+    {
+      "name": "Today Detail",
+      "path": "/todayDetail/",
+      "permissions": { "warehouseUser": true }
+    }
+  ]
+}

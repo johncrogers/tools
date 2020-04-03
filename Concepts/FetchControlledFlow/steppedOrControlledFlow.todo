@@ -1,0 +1,11 @@
+================================================================================================================================================================================================================================================
+STEPPED FLOW:
+    Purpose: A utility that controls the rendered view by asserting on the given requirements.
+    requirement: ()=>boolean
+    FetchControledFlowWithRequirement( requirements: requirement[], steps: React.Node[] ):
+        ☐ function checkRequirement(requirement) => requirement()
+        useEffect:
+            ☐ Set `step` = requirements.filter(checkRequirement).length
+        render > FetchControlledFlow(steps, step):
+            ☐ Show current step `return steps[step]`
+================================================================================================================================================================================================================================================

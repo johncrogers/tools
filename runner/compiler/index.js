@@ -10,10 +10,13 @@ console.log("Starting watcher...");
 watch(indexPath, { recursive: true }, function(event, filename) {
   try {
     console.log("Attempting to build...");
-    execSync(`npx tsc src/index.ts --outFile ./output/index.js`, {
-      cwd: process.cwd(),
-      stdio: [0, 1, 2]
-    });
+    execSync(
+      `npx tsc src/index.ts --outFile ./output/index.js --module system`,
+      {
+        cwd: process.cwd(),
+        stdio: [0, 1, 2]
+      }
+    );
     console.log("New build successful!");
   } catch (error) {
     console.error(error);

@@ -1,0 +1,106 @@
+================================================================================================================================================================================================================================================
+notifications
+NotificationsActionTypes
+clearNotifications
+CLEAR_NOTIFICATIONS
+ClearNotifications
+================================================================================================================================================================================================================================================
+REDUX FLOW:
+    Reducer:
+        ✔ Add action type to notifications action type union. `notifications.reducers.ts` @done(20-03-23 19:32)
+            export type NotificationsActionTypes =
+                | ClearNotificationsActionType
+                | ClearNotificationsSuccessActionType
+                | ClearNotificationsFailureActionType;
+        ✔ Stub out cases in notifications reducer. `notifications.reducers.ts` @done(20-03-23 19:33)
+            export function notifications(state = {}, action: NotificationsActionTypes) {
+                switch (action.type) {
+                    case CLEAR_NOTIFICATIONS:
+                        return clearNotifications(state, action)
+                    case CLEAR_NOTIFICATIONS_SUCCESS:
+                        return clearNotificationsSuccess(state, action)
+                    case CLEAR_NOTIFICATIONS_FAILURE:
+                        return clearNotificationsFailure(state, action)
+                    default:
+                        return state;
+                }
+            }
+        ✔ Export reducer. `clearNotifications.reducer.ts` @done(20-03-23 19:33)
+            export function clearNotifications(state: IRootStateType, action: NotificationsActionTypes) {
+                return { ...state, <State modifications here> };
+            }
+            export function clearNotificationsSuccess(state: IRootStateType, action: NotificationsActionTypes) {
+                return { ...state, <State modifications here> };
+            }
+            export function clearNotificationsFailure(state: IRootStateType, action: NotificationsActionTypes) {
+                return { ...state, <State modifications here> };
+            }
+    New notifications:
+        ✔ Add to defaultState. `default-state.ts` @done(20-03-23 19:33)
+        ✔ Add to root reducer. `root-reducer.ts` @done(20-03-23 19:33)
+        ✔ Add types to globals. `globalTypeDefinitions.d.ts` @done(20-03-23 19:33)
+    Action:
+        ✔ Trigger action. `YourComponent.tsx` @done(20-03-23 19:34)
+            dispatch(notificationsActions.clearNotifications(yourValues))
+        ✔ Write action tag constants. `action-types.ts` @done(20-03-23 19:34)
+            export const CLEAR_NOTIFICATIONS = "CLEAR_NOTIFICATIONS";
+            export const CLEAR_NOTIFICATIONS_SUCCESS = "CLEAR_NOTIFICATIONS_SUCCESS";
+            export const CLEAR_NOTIFICATIONS_FAILURE = "CLEAR_NOTIFICATIONS_FAILURE";
+        ✔ Add action to export. `notifications.actions.ts` @done(20-03-23 19:35)
+            export const notificationsActions = { clearNotifications }
+        ✔ Write action generators: `clearNotifications.action.ts` @done(20-03-23 19:36)
+            export function clearNotifications(payload: ClearNotificationsPayloadType ) {
+                return { type: CLEAR_NOTIFICATIONS, payload };
+            }
+            export function clearNotificationsSuccess(response: object) {
+                return { type: CLEAR_NOTIFICATIONS_SUCCESS, payload: response };
+            }
+            export function clearNotificationsFailure(error: object) {
+                return { type: CLEAR_NOTIFICATIONS_FAILURE, payload: error };
+            }
+        ✔ Write payload type. `clearNotifications.action.ts` @done(20-03-23 19:36)
+            export type ClearNotificationsPayloadType = { key: type }
+        ✔ Write action generator output type. `clearNotifications.action.ts` @done(20-03-23 19:36)
+            export type ClearNotificationsActionType = { type: typeof CLEAR_NOTIFICATIONS, payload: ClearNotificationsPayloadType }
+            export type ClearNotificationsSuccessActionType = { type: typeof CLEAR_NOTIFICATIONS_SUCCESS, payload: object }
+            export type ClearNotificationsFailureActionType = { type: typeof CLEAR_NOTIFICATIONS_FAILURE, payload: object }
+        ✔ Connect worker. `notifications.actions.ts` @done(20-03-23 19:36)
+            export const sagas = function* () {
+                yield takeLatest(CLEAR_NOTIFICATIONS, clearNotificationsWorker);
+                yield takeLatest(CLEAR_NOTIFICATIONS_SUCCESS, clearNotificationsSuccessWorker);
+                yield takeLatest(CLEAR_NOTIFICATIONS_FAILURE, clearNotificationsFailureWorker);
+            }
+        ✔ Stub worker out. `clearNotifications.action.ts` @done(20-03-23 19:36)
+            export function* clearNotificationsWorker(action: ClearNotificationsType) {
+                try {
+                    const response = yield call(
+                        notificationsService.clearNotifications,
+                        action.payload
+                    );
+                    yield put(clearNotificationsSuccess(response));
+                } catch (error) {
+                    yield put(clearNotificationsFailure(error));
+                }
+            }
+            export function* clearNotificationsSuccessWorker() {
+                toast.success(`Success!`);
+            }
+            export function* clearNotificationsFailureWorker() {
+                toast.error(`Failure!`);
+            }
+    Service:
+        ✔ Add service to export. `notifications.services.ts` @done(20-03-23 19:36)
+            export const notificationsService = { clearNotifications }
+        ✔ Write service logic. `clearNotifications.service.ts` @done(20-03-23 19:36)
+            export function clearNotificationsService(requestBody: ClearNotificationsPayloadType) {
+                const requestOptions = {
+                    body: JSON.stringify(requestBody),
+                    headers: { "Content-Type": "application/json" },
+                    method: "POST",
+                };
+                return fetch(
+                    `${config.apiUrl}/endpoint`,
+                    requestOptions,
+                ).then(handleRequestResponse);
+            }
+================================================================================================================================================================================================================================================

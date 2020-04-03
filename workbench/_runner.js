@@ -32,12 +32,13 @@ try {
     workspaces.open();
   }
 } catch (error) {
-  if (
-    error instanceof TypeError &&
-    readdirSync(`${__dirname}/${outputFolder}`).includes(
-      `${task}.code-workspace`
-    )
-  ) {
+  const workspaceName = task.includes(".code-workspace")
+    ? task
+    : `${task}.code-workspace`;
+  const workspacesContainsTaskName = readdirSync(
+    `${__dirname}/${outputFolder}`
+  ).includes(workspaceName);
+  if (error instanceof TypeError && workspacesContainsTaskName) {
     workspaces.open(task);
   } else {
     promptCreation();

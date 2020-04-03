@@ -1,0 +1,106 @@
+================================================================================================================================================================================================================================================
+resource
+ResourceActionTypes
+actionGenerator
+ACTION_TAG
+ActionTag
+================================================================================================================================================================================================================================================
+REDUX FLOW:
+    Reducer:
+        ☐ Add action type to resource action type union. `resource.reducers.ts`
+            export type ResourceActionTypes =
+                | ActionTagActionType
+                | ActionTagSuccessActionType
+                | ActionTagFailureActionType;
+        ☐ Stub out cases in resource reducer. `resource.reducers.ts`
+            export function resource(state = {}, action: ResourceActionTypes) {
+                switch (action.type) {
+                    case ACTION_TAG:
+                        return actionGenerator(state, action)
+                    case ACTION_TAG_SUCCESS:
+                        return actionGeneratorSuccess(state, action)
+                    case ACTION_TAG_FAILURE:
+                        return actionGeneratorFailure(state, action)
+                    default:
+                        return state;
+                }
+            }
+        ☐ Export reducer. `actionGenerator.reducer.ts`
+            export function actionGenerator(state: IRootStateType, action: ResourceActionTypes) {
+                return { ...state, <State modifications here> };
+            }
+            export function actionGeneratorSuccess(state: IRootStateType, action: ResourceActionTypes) {
+                return { ...state, <State modifications here> };
+            }
+            export function actionGeneratorFailure(state: IRootStateType, action: ResourceActionTypes) {
+                return { ...state, <State modifications here> };
+            }
+    New Resource:
+        ☐ Add to defaultState. `default-state.ts`
+        ☐ Add to root reducer. `root-reducer.ts`
+        ☐ Add types to globals. `globalTypeDefinitions.d.ts`
+    Action:
+        ☐ Write action tag constants. `action-types.ts`
+            export const ACTION_TAG = "ACTION_TAG";
+            export const ACTION_TAG_SUCCESS = "ACTION_TAG_SUCCESS";
+            export const ACTION_TAG_FAILURE = "ACTION_TAG_FAILURE";
+        ☐ Add action to export. `resource.actions.ts`
+            export const resourceActions = { actionGenerator }
+        ☐ Write action generators: `actionGenerator.action.ts`
+            export function actionGenerator(payload: ActionTagPayloadType ) {
+                return { type: ACTION_TAG, payload };
+            }
+            export function actionGeneratorSuccess(response: object) {
+                return { type: ACTION_TAG_SUCCESS, payload: response };
+            }
+            export function actionGeneratorFailure(error: object) {
+                return { type: ACTION_TAG_FAILURE, payload: error };
+            }
+        ☐ Write payload type. `actionGenerator.action.ts`
+            export type ActionTagPayloadType = { key: type }
+        ☐ Write action generator output type. `actionGenerator.action.ts`
+            export type ActionTagActionType = { type: typeof ACTION_TAG, payload: ActionTagPayloadType }
+            export type ActionTagSuccessActionType = { type: typeof ACTION_TAG_SUCCESS, payload: object }
+            export type ActionTagFailureActionType = { type: typeof ACTION_TAG_FAILURE, payload: object }
+        ☐ Connect worker. `resource.actions.ts`
+            export const sagas = function* () {
+                yield takeLatest(ACTION_TAG, actionGeneratorWorker);
+                yield takeLatest(ACTION_TAG_SUCCESS, actionGeneratorSuccessWorker);
+                yield takeLatest(ACTION_TAG_FAILURE, actionGeneratorFailureWorker);
+            }
+        ☐ Stub worker out. `actionGenerator.action.ts`
+            export function* actionGeneratorWorker(action: ActionTagActionType) {
+                try {
+                    const response = yield call(
+                        resourceService.actionGenerator,
+                        action.payload
+                    );
+                    yield put(actionGeneratorSuccess(response));
+                } catch (error) {
+                    yield put(actionGeneratorFailure(error));
+                }
+            }
+            export function* actionGeneratorSuccessWorker() {
+                toast.success(`Success!`);
+            }
+            export function* actionGeneratorFailureWorker() {
+                toast.error(`Failure!`);
+            }
+    Service:
+        ☐ Add service to export. `resource.services.ts`
+            export const resourceService = { actionGenerator }
+        ☐ Write service logic. `actionGenerator.service.ts`
+            export function actionGeneratorService(requestBody: ActionTagPayloadType) {
+                const requestOptions = {
+                    body: JSON.stringify(requestBody),
+                    headers: { "Content-Type": "application/json" },
+                    method: "POST",
+                };
+                return fetch(
+                    `${config.apiUrl}/endpoint`,
+                    requestOptions,
+                ).then(handleRequestResponse);
+            }
+    ☐ Trigger action. `YourComponent.tsx`
+        dispatch(resourceActions.actionGenerator(yourValues))
+================================================================================================================================================================================================================================================

@@ -2,30 +2,34 @@ const { readFileSync, writeFileSync } = require("fs");
 // TODO: Type
 // TODO: Move template out to function
 // TODO: Ask if should overwrite
-writeFileSync(
-  `${__dirname}/output/${process.argv[2]}`,
-  [
-    `"${process.argv[2]}": {`,
-    `    "prefix": "",`,
-    `    "body": [`,
-    readFileSync(`${process.argv[3]}`, { encoding: "utf8" })
-      .split("\n")
-      .map(
-        line =>
-          `"${line
-            .split("")
-            .map(char => {
-              if (char === '"') {
-                return "'";
-              } else {
-                return char;
-              }
-            })
-            .join("")}",`
-      )
-      .join("\n"),
-    `    ],`,
-    `    "description": ""`,
-    `}`
-  ].join("\n")
-);
+const snippetName = process.argv[2];
+const inputFilePath = process.argv[3];
+const outputDirectory = `${__dirname}/output/${snippetName}`;
+
+function replaceQuotes(line) {
+  return line
+    .split("")
+    .map(char => {
+      if (char === '"') {
+        return "'";
+      } else {
+        return char;
+      }
+    })
+    .join("");
+}
+
+const snippet = [
+  `"${snippetName}": {`,
+  `    "prefix": "",`,
+  `    "body": [`,
+  readFileSync(inputFilePath, { encoding: "utf8" })
+    .split("\n")
+    .map(line => `"${replaceQuotes(line)}",`)
+    .join("\n"),
+  `    ],`,
+  `    "description": ""`,
+  `}`
+].join("\n");
+
+writeFileSync(outputDirectory, snippet);
