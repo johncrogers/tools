@@ -1,46 +1,31 @@
 const { readdirSync } = require("fs");
-const readline = require("readline");
+
 const workspaces = require("./_workspaces.js");
+const { verifyInstallation, promptCreation } = require("./helpers");
 
-let task = process.argv[2];
-const outputFolder = "output";
-
-function promptCreation() {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-  });
-  rl.question(
-    `No command or workspace found. Create a new workspace in current directory? (y/n) `,
-    function(answer) {
-      if (answer === "y") {
-        const pwd = process.env.PWD;
-        const workspaceName = pwd.split("/").pop();
-        workspaces.create(workspaceName, pwd);
-        workspaces.open(workspaceName);
-      } else {
-        console.log("Please try again.");
-      }
-      rl.close();
-    }
-  );
-}
+const task = process.argv[2];
+const workspaceName = task.includes(".code-workspace")
+  ? task
+  : `${task}.code-workspace`;
+const workspacesDirectory = `${__dirname}/output`;
 
 try {
+  // Attempt task
   workspaces[task]();
   if (task === "create") {
+    // Open after new workspace creation
     workspaces.open();
   }
 } catch (error) {
-  const workspaceName = task.includes(".code-workspace")
-    ? task
-    : `${task}.code-workspace`;
-  const workspacesContainsTaskName = readdirSync(
-    `${__dirname}/${outputFolder}`
-  ).includes(workspaceName);
-  if (error instanceof TypeError && workspacesContainsTaskName) {
+  verifyInstallation(workspacesDirectory);
+  if (
+    error instanceof TypeError &&
+    readdirSync(workspacesDirectory).includes(workspaceName)
+  ) {
+    // Open when using shorthand
     workspaces.open(task);
   } else {
+    // Installation is good, workspace doesn't exist, do you want to create it?
     promptCreation();
   }
 }
