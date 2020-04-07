@@ -1,19 +1,21 @@
-const workspaces = require("../_workspaces");
-
 module.exports.promptCreation = () => {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
+  const { createInterface } = require("readline");
+  const { create, open } = require("../_workspaces");
+  const { stdin, stdout, env } = process;
+  const rl = createInterface({
+    input: stdin,
+    output: stdout,
   });
+
   rl.question(
     `No command or workspace found. Create a new workspace in current directory? (y/n) `,
-    function (answer) {
+    (answer) => {
       if (answer === "y") {
-        const pwd = process.env.PWD;
+        const pwd = env.PWD;
         // Create a workspce name from current directory name
         const workspaceName = pwd.split("/").pop();
-        workspaces.create(workspaceName, pwd);
-        workspaces.open(workspaceName);
+        create(workspaceName, pwd);
+        open(workspaceName);
       } else {
         console.log("Please try again.");
       }
