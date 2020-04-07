@@ -19,6 +19,11 @@ export toolshome="$workhome/tools"
 
 # GIT:
 alias gl="git log --graph --pretty=oneline --abbrev-commit"
+# Count lines historically: git ls-files | while read f; do git blame -w -M -C -C --line-porcelain '$f' | grep '^author '; done | sort -f | uniq -ic | sort -n
+# Count lines current: git ls-files | while read f; do git blame -w --line-porcelain -- '$f' | grep -I '^author '; done | sort -f | uniq -ic | sort -n
+# Commit Count by user: git shortlog -s
+# Count insertion and deletion by author: git log --author=Shing --pretty=tformat: --numstat | grep -v '^-' | awk '{ add+=$1; remove+=$2 } END { print add, remove }'
+# Generate gitstats: ./gitstats /Users/johnrogers/work/code/web-application ./output
 
 # TOOLS:
 alias wb="node $toolshome/workbench/_runner.js"

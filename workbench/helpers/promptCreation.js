@@ -1,6 +1,6 @@
 const workspaces = require("../_workspaces");
 
-export const promptCreation = () => {
+module.exports.promptCreation = () => {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,

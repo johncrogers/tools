@@ -1,5 +1,5 @@
-  console.group("props:", props);
-  Object.keys(props).forEach(key => {
-    console.log(`${key}:`, props[key]);
+  const classes = new BEM({
+    prefix: { name: "fetch" },
+    block: { name: "Component" },
+    elements: [],
   });
-  console.groupEnd();
