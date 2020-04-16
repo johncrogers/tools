@@ -1,0 +1,18 @@
+"reduxReducer": {
+    "prefix": "",
+    "body": [
+"/*",
+"    TODO:",
+"        - Fill names:",
+"            1: actionGenerator",
+"            2: ActionTag",
+"        - Enter types",
+" */",
+"",
+"export function $1(state: any, action: I$2ActionType) {",
+"  return action.payload;",
+"}",
+"",
+    ],
+    "description": ""
+}

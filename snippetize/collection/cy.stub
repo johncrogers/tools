@@ -1,0 +1,20 @@
+"cy.stubTestFile": {
+    "prefix": "cy.stubTestFile",
+    "body": [
+"const testName = 'TEST_NAME';",
+"const testHome = '/';",
+"",
+"describe(testName, () => {",
+"  beforeEach(() => {",
+"    cy.login();",
+"  });",
+"",
+"  it('Has a page', () => {",
+"    cy.visit(testHome);",
+"    cy.contains('Text');",
+"  });",
+"});",
+"",
+    ],
+    "description": "Generate test file shell."
+}

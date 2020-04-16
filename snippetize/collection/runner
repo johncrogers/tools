@@ -1,0 +1,14 @@
+"runner": {
+    "prefix": "",
+    "body": [
+"let assertions: {",
+"  condition(): boolean;",
+"  message: string;",
+"}[] = [];",
+"assertions.forEach(({ condition, message }) => {",
+"  console.assert(condition(), message);",
+"});",
+"",
+    ],
+    "description": ""
+}

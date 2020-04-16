@@ -1,0 +1,19 @@
+"cy.stubDescribe": {
+    "prefix": "cy.stubDescribe",
+    "body": [
+"describe('Verify Contact Options', () => {",
+"  const testHome = '/';",
+"",
+"  beforeEach(() => {",
+"    cy.login();",
+"  });",
+"",
+"  it('Has a page', () => {",
+"    cy.visit(testHome);",
+"    cy.contains('Verify Contact Options');",
+"  });",
+"});",
+"",
+    ],
+    "description": ""
+}

@@ -1,0 +1,11 @@
+"cy.stubIt": {
+    "prefix": "cy.stubIt",
+    "body": [
+"it('Has a page', () => {",
+"  cy.visit(testHome);",
+"  cy.contains('Text');",
+"});",
+"",
+    ],
+    "description": ""
+}

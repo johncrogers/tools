@@ -1,0 +1,11 @@
+"bem": {
+    "prefix": "bem",
+    "body": [
+"  const classes = new BEM({",
+"    prefix: { name: 'fetch' },",
+"    block: { name: 'Component' },",
+"    elements: [],",
+"  });",
+    ],
+    "description": ""
+}
