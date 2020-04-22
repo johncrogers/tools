@@ -35,6 +35,7 @@ alias todo="wb open todo"
 alias npm-exec='PATH=$(npm bin):$PATH'
 alias sql="wb open sql"
 alias tardis="node $toolshome/sherlock/tardis"
+alias checkout="node $toolshome/checkout/index"
 
 # APPS:
 alias bitbucket="open \"https://bitbucket.org/dashboard/overview\""
