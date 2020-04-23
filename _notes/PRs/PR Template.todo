@@ -1,0 +1,86 @@
+================================================================================================================================================================================================================================================
+describe `PackageScheduler`:
+    describe `Uncheduled`:
+        beforeEach:
+            ☐ Load unscheduled package
+        it `Has correct page content`:
+            ☐ `Expect` contains "Delivery Times for <DATE>"
+        describe `Delivery Window Options`:
+            it `Displays correct option buttons for each window`:
+                ☐ Loop each button
+                    ☐ `Expect` contains correct window text
+            it `Updates available options`:
+                ☐ Click next day button
+                ☐ Loop each button
+                    ☐ `Expect` contains correct window text
+                ☐ Click previous day button
+                ☐ Loop each button
+                    ☐ `Expect` contains correct window text
+        describe `Delivery Window Button`:
+            it `Handles successful requests`:
+                ☐ Click button to select delivery window
+                ☐ `Expect` correct request body
+                ☐ `Expect` cancel button
+            it `Handles failed requests`:
+                ☐ Click button to select delivery window
+                ☐ `Expect` toast message
+                ☐ `Expect` delivery window option button to exist
+    describe `Scheduled`:
+        beforeEach:
+            ☐ Load scheduled package
+        it `Has correct page content`:
+            ☐ `Expect` contains "Package scheduled for delivery between 12 PM - 2 PM on 04/23."
+        describe `Cancelling a scheduled delivery`:
+            it `Handles successful cancel requests`:
+                ☐ Click cancel button
+                ☐ `Expect` correct request body
+                ☐ `Expect` show PackageScheduler
+            it `Handles failed cancel requests`:
+                ☐ Click cancel button
+                ☐ `Expect` toast message
+                ☐ `Expect` show cancel button
+================================================================================================================================================================================================================================================
+COMPONENTS:
+    `PackageSchedulerCard`:
+        `PackageScheduler` ControlledFlow:
+            0:
+                isSatisfied: packageIsScheduled
+                component: `SchedulePackageDeliveryForm`
+            Goal:
+                component: `CancelScheduledPackageDeliveryForm`
+================================================================================================================================================================================================================================================
+REQUESTS:
+    Get delivery times:
+        METHOD: GET
+        ENDPOINT: /fetchPackages/51302/delivery-times?deliveryDate=2020-04-24T08:39:10.931-05:00
+        RESPONSE: {"fetchPackageId":51302,"warehouseId":24,"warehouseTimezone":"America/Chicago","deliveryDate":"2020-04-24T13:39:10.931+0000","deliveryTimes":[{"warehouseDeliveryWindowId":163,"startTime":"2020-04-24T17:00:00.000+0000","endTime":"2020-04-24T20:00:00.000+0000"},{"warehouseDeliveryWindowId":164,"startTime":"2020-04-24T22:00:00.000+0000","endTime":"2020-04-25T01:00:00.000+0000"},{"warehouseDeliveryWindowId":165,"startTime":"2020-04-25T00:00:00.000+0000","endTime":"2020-04-25T02:00:00.000+0000"},{"warehouseDeliveryWindowId":166,"startTime":"2020-04-25T02:00:00.000+0000","endTime":"2020-04-25T04:00:00.000+0000"}]}
+    Schedule Delivery:
+        METHOD: POST
+        ENDPOINT: /fetchPackages/schedule-delivery
+        REQUEST: {"fetchPackageId":50013,"deliveryWindowId":21,"deliveryDate":"2020-04-23T19:08:19.203+0000"}
+        REPSONSE: {"fetchPackageId":51302,"deliveryWindowId":163,"deliveryDate":"2020-04-24T13:39:10.931+0000","deliveryNote":null}
+    Cancel Scheduled Delivery:
+        METHOD: POST
+        ENDPOINT: /fetchPackages/cancel-schedule-delivery
+        REQUEST: {fetchPackageId: "50013"}
+        RESPONSE: empty
+================================================================================================================================================================================================================================================
+PR:
+    Personal:
+        ☐ Remove comments
+        ☐ Verify location of committed files
+        Imports:
+            ☐ Verify correct import order
+            ☐ Verify correct path pattern
+        Types:
+            ☐ Verify correct location of type
+            ☐ Remove all any types
+        Document:
+            ☐ Verify flow with tests
+            ☐ Write stories for common code
+        PR Details:
+            ☐ Context
+            ☐ Changes
+            ☐ Testing
+        ☐ Verify correct location of style rules.
+================================================================================================================================================================================================================================================
