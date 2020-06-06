@@ -2,18 +2,10 @@
   "name": "runner",
   "version": "1.0.0",
   "description": "",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "compiler": "node compiler/index.js",
-    "start": "npx nodemon output/index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@types/node": "^13.9.0",
-    "moment": "^2.25.3",
-    "nodemon": "^2.0.2",
-    "qs": "^6.9.1",
-    "typescript": "^3.7.5"
-  }
+  "license": "ISC"
 }

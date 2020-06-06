@@ -1,0 +1,7 @@
+"select": {
+    "prefix": "select",
+    "body": [
+"const { notifications } = yield select((state: IRootStateType) => state.ui);",
+    ],
+    "description": ""
+}

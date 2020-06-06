@@ -1,5 +1,1 @@
-  const classes = new BEM({
-    prefix: { name: "fetch" },
-    block: { name: "Component" },
-    elements: [],
-  });
+const store: any = rootStore.getState();

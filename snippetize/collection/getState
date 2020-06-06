@@ -1,0 +1,7 @@
+"getState": {
+    "prefix": "",
+    "body": [
+"const store: any = rootStore.getState();",
+    ],
+    "description": ""
+}
