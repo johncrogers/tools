@@ -1,1 +1,112 @@
-const store: any = rootStore.getState();
+import React, { useEffect, useState } from 'react';
+
+import { RouteComponentProps } from 'react-router';
+import { toast } from 'react-toastify';
+import { Button, Form } from 'reactstrap';
+import { Dispatch } from 'redux';
+import { Field, InjectedFormProps } from 'redux-form';
+
+import { BEM } from 'helpers/BEM.helper';
+import { FetchFormConnect } from 'helpers/FetchFormConnect';
+import { FetchInput } from 'views/common/forms/fields/FetchInput';
+// import { userActions } from 'actions/user.actions';
+
+export const $1Form: React.FC<I$1FormPropTypes> = (props: I$1FormPropTypes) => {
+  const { dispatch, text } = props;
+
+  const [isSatisfied, setIsSatisfied] = useState(true);
+
+  useEffect(() => {
+    // Mount
+    // dispatch(userActions.getMyUser())
+
+    return () => {
+      // Unmount
+    };
+  }, []);
+
+  const classes = new BEM({
+    block: { name: '$1Form' },
+    elements: [
+      { name: 'textField', extras: [] },
+      { name: 'submitButton', extras: [] },
+    ],
+  });
+
+  return (
+    <Form
+      className={classes.getBlockClassNames()}
+      onSubmit={props.handleSubmit}
+    >
+      <Field
+        {...{
+          className: classes.getElementClassNames('textField'),
+          component: FetchInput,
+          label: 'Text Field',
+          name: 'textField',
+          type: 'text',
+        }}
+      />
+      <Button
+        type='submit'
+        color='info'
+        className={classes.getElementClassNames('submitButton')}
+      >
+        Submit
+      </Button>
+    </Form>
+  );
+};
+
+$1Form.defaultProps = {
+  text: '$1Form',
+};
+
+export default FetchFormConnect({
+  FormComponent: $1Form,
+  formOptions: {
+    form: '$1Form',
+    onSubmitFail: () => {
+      toast.error('Please fix the error(s) below and try again');
+    },
+    validate: (values: I$1FormValues) => {
+      const errors: I$1FormErrors = {};
+      const requiredFields: $1FormValuesIndex[] = ['textField'];
+      requiredFields.forEach((fieldName: $1FormValuesIndex) => {
+        if (!values[fieldName]) {
+          errors[fieldName] = 'Required';
+        }
+      });
+
+      return errors;
+    },
+  },
+  state: {
+    // stores: [],
+    mapStateToProps: (rootState: IRootStateType) => {
+      const initialValues: I$1FormValues = {
+        textField: 'Default value',
+      };
+
+      return {
+        initialValues,
+      } as any;
+    },
+  },
+});
+
+export interface I$1FormPropTypes
+  extends IRootStateType,
+    RouteComponentProps<{}>,
+    InjectedFormProps<I$1FormValues> {
+  text: string;
+  dispatch: Dispatch;
+}
+
+type $1FormValuesIndex = 'textField';
+export interface I$1FormValues {
+  textField?: string;
+}
+interface I$1FormErrors {
+  textField?: string;
+}
