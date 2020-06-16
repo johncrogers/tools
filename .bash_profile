@@ -18,6 +18,8 @@ export todohome="$workhome/todo"
 export toolshome="$workhome/tools"
 
 # GIT:
+alias gc="git checkout"
+alias gp="git pull"
 alias gl="git log --graph --pretty=oneline --abbrev-commit"
 # Count lines historically: git ls-files | while read f; do git blame -w -M -C -C --line-porcelain '$f' | grep '^author '; done | sort -f | uniq -ic | sort -n
 # Count lines current: git ls-files | while read f; do git blame -w --line-porcelain -- '$f' | grep -I '^author '; done | sort -f | uniq -ic | sort -n
@@ -36,6 +38,7 @@ alias npm-exec='PATH=$(npm bin):$PATH'
 alias sql="wb open sql"
 alias tardis="node $toolshome/sherlock/tardis"
 alias checkout="node $toolshome/checkout/index"
+alias master="git checkout master"
 
 # APPS:
 alias bitbucket="open \"https://bitbucket.org/dashboard/overview\""
