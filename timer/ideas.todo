@@ -1,0 +1,122 @@
+START MVP:
+    describe `Timer`:
+        it `Shows all relevant interval information`:
+            ☐ intervalDuration
+            ☐ intervalStatus
+            ☐ intervalProgressTimestamp
+    describe `Routine Tray`:
+        it `Can queue routines`:
+            ☐ Visit timer
+            ☐ Click to open routine tray
+            ☐ Queue routine
+            ☐ Expect now playing view to update
+    describe `Now Playing`:
+        it `Shows progress through the routine`:
+            ☐ cumulativeProgressTimestamp
+            ☐ routineDuration
+        it `Contains all queued routines`:
+            ☐ Visit timer
+            ☐ Open routine tray
+            ☐ Click queue routine
+            ☐ Click queue routine
+            ☐ Expect now playing view to update
+        it `Can remove from now playing`:
+            ☐ Visit timer
+            ☐ Open routine tray
+            ☐ Click queue routine
+            ☐ Expect now playing view to update
+            ☐ Click remove button
+            ☐ Expect now playing view to update
+    describe `Pause`:
+        it `Stops progression of time counter`:
+            ☐ Click pause button
+            ☐ Wait one second
+            ☐ Expect:
+                ☐ intervalProgressTimestamp to be the same
+                ☐ cumulativeProgressTimestamp to be the same
+    describe `Sound`:
+        it `Can toggle sound`:
+            ☐ Visit routinetings
+            ☐ Click toggle
+            ☐ Expect correct request
+            ☐ Expect view to update
+            ☐ Start interval
+            ☐ Expect function to fire when prompted
+        it `Can speak`:
+            ☐ Load interval with speech
+            ☐ Start interval
+            ☐ Expect speech to have been called with interval text
+- END MVP -
+
+
+describe `Library`:
+    it `Can show all routines`:
+        ☐ Visit gallery
+        ☐ Verify that all routine thumbnails are present and correct:
+            ☐ Title
+            ☐ Duration
+            ☐ Icon???
+    it `Can queue a routine from the library`:
+        ☐ Visit timer
+        ☐ Click queue routine
+        ☐ Expect now playing view to update
+describe `Skip`:
+    it `Can skip the current interval`:
+        ☐ Click skip button
+        ☐ Confirm skip modal
+        ☐ Expect:
+            ☐ Paused
+            ☐ At the beginning of next interval
+            ☐ Marked skipped
+    it `Can skip the current routine`:
+        ☐ Click skip button
+        ☐ Confirm skip modal
+        ☐ Expect:
+            ☐ Paused
+            ☐ At the beginning of next interval
+            ☐ Marked skipped
+describe `Playlists`:
+    it `Can save a routine to a playlist`:
+        ☐ Visit library
+        ☐ Click "+" on a routine to add to list
+        ☐ Click new list
+        ☐ Type "Test Playlist"
+        ☐ Click save
+        ☐ Expect toast
+        ☐ Click playlists
+        ☐ Expect view to be correct:
+            ☐ Include new playlist
+        ☐ Click playlist
+            ☐ Expect correct routine information:
+                ☐ ...
+    it `Can play a playlist`:
+        ☐ Visit library
+        ☐ Click playlists
+        ☐ Click queue playlist
+        ☐ Expect now playing view to update
+describe `Merging`:
+    it `Can merge items into current flow`:
+        ☐ Visit library
+        ☐ Queue playlist
+        ☐ Queue playlist
+        merge routines
+        ☐ Click merge routine
+        ☐ Confirm after current routine
+        ☐ Expect view to update
+        ☐ Click merge routine
+        ☐ Confirm after current playlist
+        ☐ Expect view to update
+        merge playlists
+        ☐ Click merge different playlist
+        ☐ Confirm after current routine
+        ☐ Expect view to update
+        ☐ Click merge playlist
+        ☐ Confirm after current playlist
+        ☐ Expect view to update
+describe `Sort`:
+    it `Can rearrange items in the queue`:
+        ☐ Visit library
+        ☐ Queue playlist
+        ☐ Drag 2nd routine to front
+        ☐ Expect view to update
+        

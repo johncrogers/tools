@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Dispatch } from "redux";
 import { RouteComponentProps } from "react-router";
 import { Form, Button } from "reactstrap";
-import { Field, InjectedFormProps } from "redux-form";
+import { Field, InjectedFormProps, formValueSelector } from "redux-form";
 import { toast } from "react-toastify";
 
 import { BEM } from "helpers/BEM.helper";
@@ -11,7 +11,7 @@ import { FetchFormConnect } from "helpers/FetchFormConnect";
 import { FetchInput } from "views/common/forms/fields/FetchInput";
 
 export const $1Form: React.FC<I$1FormPropTypes> = (props: I$1FormPropTypes) => {
-  const { dispatch } = props;
+  const { dispatch, textValue } = props;
 
   const [isSatisfied, setIsSatisfied] = useState(true);
 
@@ -27,6 +27,13 @@ export const $1Form: React.FC<I$1FormPropTypes> = (props: I$1FormPropTypes) => {
     block: { name: "$1Form" },
     elements: [{ name: "temporaryPassword", extras: [] }],
   });
+
+  console.group("$1Form");
+  console.group("props:", props);
+  console.table(props);
+  console.groupEnd();
+  console.log("textValue", textValue);
+  console.groupEnd();
 
   return (
     <Form
@@ -56,7 +63,7 @@ export const $1Form: React.FC<I$1FormPropTypes> = (props: I$1FormPropTypes) => {
 export default FetchFormConnect({
   FormComponent: $1Form,
   formOptions: {
-    form: "$2",
+    form: "$1Form",
     onSubmitFail: () => {
       toast.error("Please fix the error(s) below and try again");
     },
@@ -74,14 +81,15 @@ export default FetchFormConnect({
     },
   },
   state: {
-    mapStateToProps: ({ currentUser, authentication }: IRootStateType) => {
-      if (authentication.tokens) {
-        return {
-          initialValues: {
-            userId: currentUser.userId,
-          },
-        } as any;
-      }
+    mapStateToProps: (rootState: IRootStateType) => {
+      const { currentUser } = rootState;
+
+      return {
+        initialValues: {
+          userId: currentUser.userId,
+          textValue: formValueSelector("$1Form")(rootState, "text"),
+        },
+      } as any;
     },
   },
 });
@@ -91,6 +99,7 @@ export interface I$1FormPropTypes
     RouteComponentProps<{}>,
     InjectedFormProps<I$1FormValues> {
   dispatch: Dispatch;
+  textValue: string;
 }
 type $1FormValuesIndex = "text";
 export interface I$1FormValues {

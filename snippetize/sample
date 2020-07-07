@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 
-import { RouteComponentProps } from "react-router";
 import { Dispatch } from "redux";
+import { RouteComponentProps } from "react-router";
+import { Form, Button } from "reactstrap";
+import { Field, InjectedFormProps, formValueSelector } from "redux-form";
+import { toast } from "react-toastify";
 
 import { BEM } from "helpers/BEM.helper";
-import { FetchConnect } from "helpers/FetchConnect";
-import FetchModal from "views/common/modals/FetchModal";
+import { FetchFormConnect } from "helpers/FetchFormConnect";
+import { FetchInput } from "views/common/forms/fields/FetchInput";
 
-export const $1Modal: React.FC<I$1ModalPropTypes> = (
-  props: I$1ModalPropTypes,
-) => {
-  const { dispatch, text } = props;
+export const $1Form: React.FC<I$1FormPropTypes> = (props: I$1FormPropTypes) => {
+  const { dispatch, textValue } = props;
 
   const [isSatisfied, setIsSatisfied] = useState(true);
 
@@ -23,29 +24,87 @@ export const $1Modal: React.FC<I$1ModalPropTypes> = (
   }, []);
 
   const classes = new BEM({
-    block: { name: "$1Modal" },
+    block: { name: "$1Form" },
     elements: [{ name: "temporaryPassword", extras: [] }],
   });
 
+  console.group("$1Form");
+  console.group("props:", props);
+  console.table(props);
+  console.groupEnd();
+  console.log("textValue", textValue);
+  console.groupEnd();
+
   return (
-    <FetchModal title="$1" id="$1">
-      <div>Body</div>
-    </FetchModal>
+    <Form
+      className={classes.getBlockClassNames()}
+      onSubmit={props.handleSubmit}
+    >
+      <Field
+        {...{
+          className: classes.getElementClassNames("text"),
+          component: FetchInput,
+          label: "Text Field",
+          name: "text",
+          type: "text",
+        }}
+      />
+      <Button
+        type="submit"
+        color="info"
+        className={classes.getElementClassNames("submitButton")}
+      >
+        Submit
+      </Button>
+    </Form>
   );
 };
 
-$1Modal.defaultProps = {
-  text: "$1Modal",
-};
+export default FetchFormConnect({
+  FormComponent: $1Form,
+  formOptions: {
+    form: "$1Form",
+    onSubmitFail: () => {
+      toast.error("Please fix the error(s) below and try again");
+    },
+    validate: (values: I$1FormValues) => {
+      const errors: I$1FormErrors = {};
+      const requiredFields: $1FormValuesIndex[] = ["text"];
 
-export default FetchConnect({
-  ConnectedComponent: $1Modal,
-  state: { stores: [] },
+      requiredFields.forEach((fieldName: $1FormValuesIndex) => {
+        if (!values[fieldName]) {
+          errors[fieldName] = "Required";
+        }
+      });
+
+      return errors;
+    },
+  },
+  state: {
+    mapStateToProps: (rootState: IRootStateType) => {
+      const { currentUser } = rootState;
+
+      return {
+        initialValues: {
+          userId: currentUser.userId,
+          textValue: formValueSelector("$1Form")(rootState, "text"),
+        },
+      } as any;
+    },
+  },
 });
 
-export interface I$1ModalPropTypes
+export interface I$1FormPropTypes
   extends IRootStateType,
-    RouteComponentProps<{}> {
-  text: string;
+    RouteComponentProps<{}>,
+    InjectedFormProps<I$1FormValues> {
   dispatch: Dispatch;
+  textValue: string;
+}
+type $1FormValuesIndex = "text";
+export interface I$1FormValues {
+  text?: string;
+}
+interface I$1FormErrors {
+  text?: string;
 }

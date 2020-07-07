@@ -1,19 +1,13 @@
-import React, { useState } from "react";
-import { Filter, ReactTableFunction } from "react-table";
-import Input from "reactstrap/lib/Input";
-import { FetchFieldValidationWrapper } from "views/common/forms/fields/FetchFieldValidationWrapper";
-import { BEM } from "helpers/BEM.helper";
-
-export const CustomTableFilter = ({
+const CustomTableFilter = ({
   filter,
   onChange,
-  validate
+  validate,
 }: ICustomTableFilterProps) => {
   return (
     <Input
       type="search"
       value={filter ? filter.value : ""}
-      onChange={event => {
+      onChange={(event) => {
         if (validate) {
           validate(event, onChange);
         } else if (onChange) {
@@ -24,21 +18,21 @@ export const CustomTableFilter = ({
   );
 };
 
-export interface ICustomTableFilterProps {
+interface ICustomTableFilterProps {
   filter: Filter;
   onChange?: ReactTableFunction;
   validate?: any;
 }
 
-export const FetchCustomTableFilter: React.FC<IFetchCustomTableFilterPropTypes> = (
-  props: IFetchCustomTableFilterPropTypes
+export const FetchInputTableFilter: React.FC<IFetchInputTableFilterPropTypes> = (
+  props: IFetchInputTableFilterPropTypes
 ) => {
   const { filter, meta, validate } = props;
 
   const classes = new BEM({
     prefix: { name: "fetch" },
-    block: { name: "CustomTableFilter" },
-    elements: [{ name: "error" }]
+    block: { name: "FetchInputTableFilter" },
+    elements: [{ name: "error" }],
   });
 
   return (
@@ -47,13 +41,13 @@ export const FetchCustomTableFilter: React.FC<IFetchCustomTableFilterPropTypes> 
         type: "search",
         meta,
         classes,
-        children: <CustomTableFilter {...{ filter, validate }} />
+        children: <CustomTableFilter {...{ filter, validate }} />,
       }}
     />
   );
 };
 
-export interface IFetchCustomTableFilterPropTypes {
+interface IFetchInputTableFilterPropTypes {
   meta: { touched: boolean; error: string };
   validate?: any;
   filter: Filter;
@@ -65,38 +59,56 @@ export const PackageIdFilter: React.FC<IPackageIdFilterPropTypes> = (
   const { filter, onChange } = props;
 
   const [touched, setTouched] = useState(false);
-  const [error, setError] = useState();
+  const [error, setError] = useState("");
 
   return (
-    <FetchCustomTableFilter
+    <FetchInputTableFilter
       {...{
-        validate: (event: any) => {
-          setTouched(true);
-          const value = event ? event.currentTarget.value : "";
-
-          const containsNonNumberCharacters = /[^\d*]/;
-          const isEmpty = value.length === 0;
-
-          if (containsNonNumberCharacters.test(value)) {
-            setError("You must enter a number");
-          } else if (isEmpty) {
-            setTouched(false);
-            onChange("");
-          } else {
-            setError("");
-            onChange(parseInt(value, 10));
-          }
+        validations: [mustBeANumber],
+        onSuccess: (value: InputValue) => {
+          dispatch(packageActions.searchPackages(value));
         },
-        meta: { touched, error },
-        filter
+        /*
+          validate: (event: any) => {
+            setTouched(true);
+            const value = event ? event.currentTarget.value : "";
+  
+            const containsNonNumberCharacters = /[^\d*]/;
+            const isEmpty = value.length === 0;
+  
+            if (containsNonNumberCharacters.test(value)) {
+              setError("You must enter a number");
+            } else if (isEmpty) {
+              setTouched(false);
+              onChange("");
+            } else {
+              setError("");
+              onChange(parseInt(value, 10));
+            }
+          },
+          meta: { touched, error },
+          filter,
+         */
       }}
     />
   );
 };
 
-export interface IPackageIdFilterPropTypes extends ITableFilterProps {}
+const mustBeANumber: Validator = {
+  evaluator: (value: InputValue) => /[^\d*]/.test(value),
+  message: "You must enter a number.",
+};
+
+interface Validator {
+  evaluator: (value: InputValue) => boolean;
+  message: string;
+}
+
+interface IPackageIdFilterPropTypes extends ITableFilterProps {}
 
 interface ITableFilterProps {
   onChange: ReactTableFunction;
   filter: Filter;
 }
+
+type InputValue = any;
